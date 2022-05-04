@@ -13,7 +13,7 @@ fname = '/Users/austegard/Downloads/Parkwood_1_Randomnearing.gpx'
 layer = fiona.open(fname, layer='tracks')
 # These files only have a single layer, so we can use `layer[0]`
 geom = layer[0]
-(x0, y0, x1, y1) = layer.bounds
+(x0, y0, x1, y1) = layer.bounds #gets bounding points as x=long, y=lat
 data = {'type': 'MultiLineString',
         'coordinates': geom['geometry']['coordinates']}
 
@@ -30,7 +30,7 @@ def make_map(projection=ccrs.PlateCarree()):
 
 request = cimgt.OSM()
 fig, ax = make_map(projection=request.crs)
-ax.set_extent([x0, x1, y0, y1])
+ax.set_extent([x0, x1, y0, y1]) #sets bounding x,y ranges -- note difference in order betwen this and fiona.layer.bounds
 img = ax.add_image(request, 15) #TODO: #1 derive appropriate zoom level from bounds
 s = ax.add_geometries(shp, ccrs.PlateCarree(),
                       facecolor='none',
